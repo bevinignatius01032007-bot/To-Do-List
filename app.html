@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Focused Clarity - Task Dashboard</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-primary": "#ffffff",
+            "secondary-fixed-dim": "#b7c8e1",
+            "on-tertiary": "#ffffff",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-low": "#f3f4f5",
+            "surface-container-high": "#e7e8e9",
+            "surface-container": "#edeeef",
+            "inverse-on-surface": "#f0f1f2",
+            "secondary": "#505f76",
+            "on-tertiary-fixed-variant": "#723600",
+            "primary-container": "#2170e4",
+            "outline-variant": "#c2c6d6",
+            "tertiary-container": "#b75b00",
+            "surface-bright": "#f8f9fa",
+            "surface-container-highest": "#e1e3e4",
+            "secondary-fixed": "#d3e4fe",
+            "inverse-primary": "#adc6ff",
+            "on-primary-fixed-variant": "#004395",
+            "error-container": "#ffdad6",
+            "secondary-container": "#d0e1fb",
+            "on-tertiary-fixed": "#311400",
+            "on-secondary": "#ffffff",
+            "on-surface-variant": "#424754",
+            "primary": "#0058be",
+            "on-error": "#ffffff",
+            "tertiary-fixed": "#ffdcc6",
+            "surface-variant": "#e1e3e4",
+            "error": "#ba1a1a",
+            "on-surface": "#191c1d",
+            "on-secondary-fixed": "#0b1c30",
+            "surface-dim": "#d9dadb",
+            "inverse-surface": "#2e3132",
+            "surface-tint": "#005ac2",
+            "primary-fixed": "#d8e2ff",
+            "on-background": "#191c1d",
+            "on-primary-container": "#fefcff",
+            "tertiary-fixed-dim": "#ffb786",
+            "background": "#f8f9fa",
+            "on-secondary-fixed-variant": "#38485d",
+            "primary-fixed-dim": "#adc6ff",
+            "surface": "#f8f9fa",
+            "on-secondary-container": "#54647a",
+            "on-error-container": "#93000a",
+            "on-primary-fixed": "#001a42",
+            "outline": "#727785",
+            "tertiary": "#924700",
+            "on-tertiary-container": "#fffbff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "touch-target": "2.75rem",
+            "inline-gap": "0.75rem",
+            "container-margin": "1.5rem",
+            "section-gap": "2rem",
+            "stack-gap": "1rem"
+          },
+          "fontFamily": {
+            "label-sm": ["Inter"],
+            "body-lg": ["Inter"],
+            "headline-lg": ["Inter"],
+            "headline-md": ["Inter"],
+            "body-md": ["Inter"],
+            "label-md": ["Inter"]
+          },
+          "fontSize": {
+            "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "600" }],
+            "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+            "headline-lg": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500" }]
+          }
+        },
+      },
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .dark { color-scheme: dark; }
+    .light { color-scheme: light; }
+  </style>
+</head>
+<body data-page="app" class="text-on-surface bg-[radial-gradient(circle_at_top_left,_var(--tw-gradient-stops))] from-primary/10 via-background to-tertiary/10 min-h-screen">
+  <!-- Top Navigation Shell -->
+  <header class="fixed top-0 left-0 w-full z-30 bg-white/40 backdrop-blur-xl flex justify-between items-center h-24 px-12 border-b border-outline-variant/10">
+    <div class="flex items-center gap-6">
+      <button class="w-12 h-12 flex items-center justify-center bg-surface-container-lowest shadow-sm rounded-xl hover:bg-surface-container transition-colors">
+        <span class="material-symbols-outlined text-3xl">menu</span>
+      </button>
+      <h1 class="font-headline-md text-headline-md font-bold text-primary">Focused Clarity</h1>
+    </div>
+    <div class="relative w-[500px]">
+      <span class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline text-2xl">search</span>
+      <input class="w-full bg-surface-container-lowest border-none rounded-2xl pl-12 pr-4 py-4 font-body-md text-body-md shadow-sm focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Search tasks..." type="text" id="search-input" />
+    </div>
+    <div class="flex items-center gap-4">
+      <button id="theme-toggle" class="w-12 h-12 flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors">
+        <span class="material-symbols-outlined text-2xl">dark_mode</span>
+      </button>
+      <div class="h-8 w-[1px] bg-outline-variant mx-2"></div>
+      <button id="logout-button" class="font-label-md text-label-md text-primary hover:text-primary-container transition-colors">Logout</button>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="pt-32 pb-24 px-12 min-h-screen relative overflow-hidden">
+    <div class="absolute top-[-10%] right-[-5%] w-[40rem] h-[40rem] bg-primary/5 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="absolute bottom-[-10%] left-[-5%] w-[30rem] h-[30rem] bg-tertiary/5 rounded-full blur-[100px] pointer-events-none"></div>
+
+    <!-- Tasks View -->
+    <div id="tasks-view" class="max-w-6xl mx-auto flex gap-section-gap">
+      <!-- Left Column: Tasks Feed -->
+      <div class="flex-grow space-y-stack-gap">
+        <!-- Header Card -->
+        <section class="bg-gradient-to-r from-primary to-primary-container rounded-2xl p-8 border-none shadow-[0_20px_40px_rgba(33,112,228,0.15)] text-on-primary mb-12 shadow-[0_30px_60px_rgba(0,88,190,0.2)]">
+          <div class="flex justify-between items-end mb-6">
+            <div>
+              <h2 class="font-headline-lg text-4xl font-extrabold mb-1">Daily Momentum</h2>
+              <p class="font-body-md text-body-md opacity-90" id="momentum-subtitle">0 tasks completed today</p>
+            </div>
+            <span class="font-label-md text-label-md bg-on-primary/20 px-3 py-1 rounded-full"><span id="tasks-completed">0</span> / <span id="tasks-total">0</span> Tasks</span>
+          </div>
+          <div class="w-full h-3 bg-on-primary/20 rounded-full overflow-hidden">
+            <div id="progress-bar" class="h-full bg-on-primary w-0 rounded-full shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-700"></div>
+          </div>
+        </section>
+
+        <!-- Momentum Feedback -->
+        <div id="momentum-feedback" class="text-center py-2 font-body-md text-body-md text-on-surface-variant"></div>
+
+        <!-- Input Section -->
+        <form id="todo-form" class="relative group mb-8" autocomplete="off">
+          <div class="flex gap-2">
+            <input id="task-input" class="flex-grow bg-white border-none rounded-3xl px-8 py-8 font-body-lg text-xl shadow-[0_10px_40px_rgba(0,88,190,0.08)] focus:ring-4 focus:ring-primary/5 transition-all" placeholder="What will you focus on today?" type="text" />
+            <button type="submit" class="bg-primary text-on-primary font-label-md text-label-md px-8 py-4 rounded-3xl shadow-lg shadow-primary/25 hover:scale-105 transition-all flex items-center gap-2">
+              <span class="material-symbols-outlined">add</span>
+              Add
+            </button>
+          </div>
+          <div class="flex gap-2 mt-4">
+            <select id="task-priority" class="bg-surface-container-lowest border border-outline-variant/30 text-on-surface font-label-md text-label-md px-4 py-2 rounded-xl">
+              <option value="Low">Low Priority</option>
+              <option value="Medium" selected>Medium Priority</option>
+              <option value="High">High Priority</option>
+            </select>
+            <select id="task-category" class="bg-surface-container-lowest border border-outline-variant/30 text-on-surface font-label-md text-label-md px-4 py-2 rounded-xl">
+              <option value="Personal" selected>Personal</option>
+              <option value="Work">Work</option>
+              <option value="Team">Team</option>
+            </select>
+          </div>
+        </form>
+
+        <!-- Filter Chips -->
+        <div class="flex flex-wrap gap-2 py-2">
+          <button class="filter-button active bg-primary text-on-primary px-8 py-3 rounded-2xl font-label-md text-label-md shadow-lg shadow-primary/25 hover:scale-105 transition-transform" data-filter="all">All Tasks</button>
+          <button class="filter-button bg-secondary-container text-on-secondary-container px-8 py-3 rounded-2xl font-label-md text-label-md hover:scale-105 transition-transform" data-filter="ongoing">Active</button>
+          <button class="filter-button bg-surface-container-high text-on-surface-variant px-8 py-3 rounded-2xl font-label-md text-label-md hover:scale-105 transition-transform" data-filter="completed">Completed</button>
+          <span class="ml-auto flex gap-2">
+            <span class="py-3 font-label-md text-label-md text-on-surface-variant">Priority:</span>
+            <button class="priority-button active bg-surface-container-high text-on-surface-variant px-4 py-2 rounded-2xl font-label-md text-label-md hover:scale-105 transition-transform" data-priority="all">All</button>
+            <button class="priority-button bg-error-container text-on-error-container px-4 py-2 rounded-2xl font-label-md text-label-md hover:scale-105 transition-transform" data-priority="High">High</button>
+            <button class="priority-button bg-secondary-container text-on-secondary-container px-4 py-2 rounded-2xl font-label-md text-label-md hover:scale-105 transition-transform" data-priority="Medium">Medium</button>
+            <button class="priority-button bg-surface-container-high text-on-surface-variant px-4 py-2 rounded-2xl font-label-md text-label-md hover:scale-105 transition-transform" data-priority="Low">Low</button>
+          </span>
+        </div>
+
+        <!-- Category Filter -->
+        <div class="flex flex-wrap gap-2 py-2">
+          <span class="py-3 font-label-md text-label-md text-on-surface-variant">Category:</span>
+          <button class="category-button active bg-primary text-on-primary px-8 py-3 rounded-2xl font-label-md text-label-md shadow-lg shadow-primary/25 hover:scale-105 transition-transform" data-category="all">All</button>
+          <button class="category-button bg-surface-container-high text-on-surface-variant px-8 py-3 rounded-2xl font-label-md text-label-md hover:scale-105 transition-transform" data-category="Personal">Personal</button>
+          <button class="category-button bg-surface-container-high text-on-surface-variant px-8 py-3 rounded-2xl font-label-md text-label-md hover:scale-105 transition-transform" data-category="Work">Work</button>
+          <button class="category-button bg-surface-container-high text-on-surface-variant px-8 py-3 rounded-2xl font-label-md text-label-md hover:scale-105 transition-transform" data-category="Team">Team</button>
+        </div>
+
+        <!-- Task List -->
+        <div id="task-list" class="space-y-6 mt-8"></div>
+      </div>
+
+      <!-- Right Column: Sidebar -->
+      <aside class="w-80 space-y-6">
+        <!-- Deep Work Section -->
+        <section class="bg-gradient-to-br from-[#6200ee] to-[#7c4dff] text-on-primary rounded-2xl p-6 relative overflow-hidden shadow-xl">
+          <div class="absolute -right-4 -top-4 w-24 h-24 bg-on-primary/10 rounded-full blur-2xl"></div>
+          <div class="relative z-10">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="material-symbols-outlined text-xl">bolt</span>
+              <h4 class="font-label-md text-label-md uppercase tracking-widest font-bold">Productivity Tip</h4>
+            </div>
+            <h3 class="font-headline-md text-headline-md mb-2">Stay Focused</h3>
+            <p class="font-label-md text-label-md opacity-90 leading-relaxed mb-4">Complete your high-priority tasks first for maximum impact on your daily momentum.</p>
+            <button class="w-full bg-on-primary text-primary font-label-md text-label-md py-2.5 rounded-lg font-bold hover:bg-primary-fixed transition-colors">Learn More</button>
+          </div>
+        </section>
+
+        <!-- Archive Cleanup Notification -->
+        <section class="bg-surface-container rounded-xl p-5 border border-outline-variant/30">
+          <div class="flex items-start gap-3">
+            <div class="p-2 bg-secondary-container rounded-lg flex-shrink-0">
+              <span class="material-symbols-outlined text-on-secondary-container">auto_delete</span>
+            </div>
+            <div class="flex-grow">
+              <h4 class="font-label-md text-label-md font-bold text-on-surface">Archive Cleanup</h4>
+              <p class="font-label-sm text-label-sm text-on-surface-variant mt-1 leading-normal" id="archive-message">You have completed tasks ready to archive.</p>
+              <button id="archive-button" class="text-primary font-label-sm text-label-sm font-bold mt-3 hover:underline">Archive all completed</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Statistics Card -->
+        <section class="bg-surface-container-lowest rounded-xl p-5 border border-outline-variant/30 shadow-sm">
+          <h4 class="font-label-md text-label-md font-bold text-on-surface mb-4">Quick Stats</h4>
+          <div class="space-y-3">
+            <div class="flex justify-between items-center">
+              <span class="font-label-md text-label-md text-on-surface-variant">Total Tasks</span>
+              <span id="stats-total" class="font-headline-md text-headline-md text-primary font-bold">0</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="font-label-md text-label-md text-on-surface-variant">Completed</span>
+              <span id="stats-completed" class="font-headline-md text-headline-md text-primary font-bold">0</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="font-label-md text-label-md text-on-surface-variant">Remaining</span>
+              <span id="remaining-count" class="font-headline-md text-headline-md text-on-surface font-bold">0</span>
+            </div>
+          </div>
+        </section>
+      </aside>
+    </div>
+
+    <!-- Archive View -->
+    <div id="archive-view" class="hidden max-w-6xl mx-auto space-y-10">
+      <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <button id="back-to-tasks" class="flex items-center gap-2 text-primary hover:text-primary-container transition-colors">
+          <span class="material-symbols-outlined">arrow_back</span>
+          <span class="font-label-md text-label-md">Back to Tasks</span>
+        </button>
+        <h2 class="font-headline-lg text-headline-lg text-on-surface">Archived Tasks</h2>
+      </div>
+
+      <section class="bg-primary text-on-primary-container p-6 rounded-xl shadow-sm flex flex-col gap-6 overflow-hidden relative sm:flex-row sm:items-center sm:justify-between">
+        <div class="z-10">
+          <p class="font-label-md text-label-md opacity-90 mb-1">Archive Overview</p>
+          <h3 class="font-headline-lg text-headline-lg mb-2">Review your completed work</h3>
+          <p class="font-body-md text-body-md opacity-80 max-w-xl">Completed tasks are stored here so you can restore them or keep a clean, focused workspace.</p>
+        </div>
+        <div class="hidden sm:block z-10">
+          <span class="material-symbols-outlined text-[64px] opacity-20">inventory_2</span>
+        </div>
+        <div class="absolute right-0 top-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 blur-2xl"></div>
+        <div class="absolute left-1/2 bottom-0 w-24 h-24 bg-white/5 rounded-full blur-xl"></div>
+      </section>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="bg-surface-container-lowest rounded-xl p-5 border border-outline-variant/30 shadow-sm">
+          <p class="font-label-md text-label-md text-on-surface-variant">Total Archive</p>
+          <p id="archive-count" class="font-headline-md text-headline-md font-bold text-primary mt-2">0</p>
+        </div>
+        <div class="bg-surface-container-lowest rounded-xl p-5 border border-outline-variant/30 shadow-sm">
+          <p class="font-label-md text-label-md text-on-surface-variant">Completed this week</p>
+          <p id="archive-weekly-count" class="font-headline-md text-headline-md font-bold text-primary mt-2">0</p>
+        </div>
+        <div class="bg-surface-container-lowest rounded-xl p-5 border border-outline-variant/30 shadow-sm">
+          <p class="font-label-md text-label-md text-on-surface-variant">Ready to restore</p>
+          <p id="archive-restore-count" class="font-headline-md text-headline-md font-bold text-primary mt-2">0</p>
+        </div>
+      </div>
+
+      <div id="archive-list" class="space-y-4"></div>
+
+      <div class="mt-12 mb-8 flex flex-col items-center text-center px-8 py-10 bg-surface-container-lowest border border-outline-variant border-dashed rounded-3xl">
+        <div class="w-48 h-48 mb-6 overflow-hidden rounded-2xl grayscale opacity-30">
+          <img alt="Zen stones" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAt2QVigXeHRUJuUTZs5u7oNzXhpMT2k1daV_vJFFiMO4DQeC_KJU9T0SxZjlrNZ7DiwNtt4kVQW9gSfWfuirmZJOVdOdz1Xgh6ALfogmdMVdUh3FjmqbGNs9J8sOTytMkMphuqjFEWUoubT-3-TYewgWQQZbTB0DH-_Vpgpqbmu1mjr0QsL80k24_xCRgbPQaA5oAx66m0U3bXJhq3W6p7_CInvXYJgcXFmCScIClIIpBlZHC7FX_Wpb8csVRkHDtDaKRsriyeQrY" />
+        </div>
+        <h3 class="font-headline-md text-headline-md text-on-surface mb-2">Clarity Achieved</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant max-w-sm">You have no pending tasks in your archive from this month. Keep up the momentum.</p>
+      </div>
+    </div>
+
+    <!-- BottomNavBar -->
+    <nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-surface shadow-[0_-4px_20px_0_rgba(15,23,42,0.04)]">
+      <a id="nav-tasks" class="flex flex-col items-center justify-center text-secondary p-2 hover:text-primary transition-all" href="#">
+        <span class="material-symbols-outlined mb-1">dashboard</span>
+        <span class="font-label-md text-label-md">Tasks</span>
+      </a>
+      <a id="nav-archive" class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl touch-target px-4 py-2 scale-90 transition-transform duration-150" href="#">
+        <span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+        <span class="font-label-md text-label-md">Archive</span>
+      </a>
+      <a class="flex flex-col items-center justify-center text-secondary p-2 hover:text-primary transition-all" href="#">
+        <span class="material-symbols-outlined mb-1">person</span>
+        <span class="font-label-md text-label-md">Profile</span>
+      </a>
+    </nav>
+  </main>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
